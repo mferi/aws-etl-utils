@@ -15,7 +15,7 @@ def read(fname):
 
 config = {
         'description': 'AWS ETL Utility',
-        'version': '0.0.1',
+        'version': '0.0.2',
         'license': 'Apache 2.0',
         'url': 'https://github.com/mferi/aws-etl-utils',
         'author': 'Maria Feria',
