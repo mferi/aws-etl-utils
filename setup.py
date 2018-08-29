@@ -16,7 +16,7 @@ with open(join(dirname(__file__), 'README.md')) as fr:
 config = {
         'name': 'aws-etl-utils',
         'description': 'AWS ETL Utility',
-        'version': '0.0.2',
+        'version': '0.0.3',
         'license': 'Apache 2.0',
         'url': 'https://github.com/mferi/aws-etl-utils',
         'author': 'Maria Feria',
