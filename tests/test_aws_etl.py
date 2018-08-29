@@ -5,9 +5,10 @@
 import binascii
 import os
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import create_autospec, MagicMock, patch
 
 from aws_etl import utils
+from aws_etl.redshift import RedshiftETLBuilder
 
 
 class UtilsTest(unittest.TestCase):
@@ -60,6 +61,31 @@ class UtilsTest(unittest.TestCase):
         """Test set region name set DEFAULT_REGION not none"""
         utils.set_region_name()
         self.assertIsNotNone(os.environ['DEFAULT_REGION'])
+
+
+class RedshiftETLBuilderTest(unittest.TestCase):
+    CLUSTER = {}
+    def setUp(self):
+        self.rs = RedshiftETLBuilder(self.CLUSTER)
+        self.mock_rs = create_autospec(RedshiftETLBuilder, spec_set=True)
+
+    def test_connect_is_called_and_returns_(self):
+        con = self.mock_rs._connect()
+        assert self.mock_rs._connect.called
+        self.assertIsNotNone(con)
+
+    @patch.object(RedshiftETLBuilder, '_connect')
+    def test_cursor_calls_connect(self, mock_con):
+        # test that the connect method was not called
+        self.assertFalse(self.rs._connect.called)
+        cur = self.rs._get_cursor()
+        # test when cursor called, connect is called
+        assert mock_con.called
+
+    def test_sql_script_execute_is_called(self):
+        self.assertFalse(self.mock_rs.sql_scripts_execute.called)
+        self.mock_rs.sql_scripts_execute(['some/path'])
+        self.mock_rs.sql_scripts_execute.assert_called_with(['some/path'])
 
 
 if __name__ == '__main__':
