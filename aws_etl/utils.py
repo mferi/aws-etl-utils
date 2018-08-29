@@ -3,6 +3,8 @@
 """Utilities for AWS ETL."""
 
 import base64
+from dateutil.relativedelta import relativedelta
+from datetime import date
 import json
 import logging
 import os
@@ -67,3 +69,22 @@ def set_region_name():
         os.environ['DEFAULT_REGION'] = region_name
     else:
         log.info('Region name already set as %s', os.environ['DEFAULT_REGION'])
+
+
+def default_parameters():
+    """App default parameters are:
+    lw: last week year
+    lwy: last week year
+    """
+    # ADD HERE OTHER PARAMETERS AS REQUIRED BY APP
+    last_week = date.today() - relativedelta(days=+7)
+    last_week_num = last_week.isocalendar()[1]
+    log.debug('Last week number: {}'.format(last_week_num))
+    last_week_year_num = last_week.isocalendar()[0]
+    log.debug('Last week year: {}'.format(last_week_year_num))
+    # Update these parameters as required by project basis
+    return \
+        {
+            'lw': last_week_num,
+            'lwy': last_week_year_num,
+        }
