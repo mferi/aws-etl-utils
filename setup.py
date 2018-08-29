@@ -14,7 +14,7 @@ with open(join(dirname(__file__), 'README.md')) as fr:
     long_description = fr.read()
 
 config = {
-        'name': 'AWS-etl-utils',
+        'name': 'aws-etl-utils',
         'description': 'AWS ETL Utility',
         'version': '0.0.2',
         'license': 'Apache 2.0',
@@ -30,7 +30,8 @@ config = {
         'long_description_content_type': 'text/markdown',
         'classifiers': (
             'Programming Language :: Python :: 3',
-            'License :: OSI Approved :: Apache License 2.0',
+            'License :: OSI Approved :: Apache Software License',
+            'Operating System :: OS Independent',
         )
     }
 
