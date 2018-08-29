@@ -19,6 +19,7 @@ class RedshiftETLBuilder:
         self.session = session
 
     def _connect(self):
+        """Connect to redshift cluster."""
         if self.cluster.get('encrypted_password'):
             self.cluster['password'] = aws_etl.utils.decrypt(
                 self.cluster['encrypted_password'])
@@ -33,6 +34,7 @@ class RedshiftETLBuilder:
         return self.connection
 
     def _get_cursor(self):
+        """Get redshift cluster cursor."""
         conn = self._connect()
         conn.autocommit = True
         cursor = conn.cursor()
@@ -46,7 +48,6 @@ class RedshiftETLBuilder:
         for q in sql_scripts:
             with open(q, 'r') as s:
                 sql_string_formatted = s.read().format(**ps)
-                print(sql_string_formatted)
                 cursor.execute(sql.SQL(sql_string_formatted), ps)
         self.connection.commit()
         self.connection.close()
